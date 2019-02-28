@@ -71,7 +71,7 @@ $(document).on("click", "#savenote", function() {
   $("#bodyinput").val("");
 });
 
-// When you click the savenote button
+// When you click the delete button
 $(document).on("click", ".deletebtn", function () {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");

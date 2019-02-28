@@ -3,7 +3,13 @@
     <h1>Note Scraper</h1>
     <h2><i>If you can do this...the homework should be no problem.</i></h2>
     {{#each scrapes}}
-        <div id="articles">{{title}}</div>
-        <div id="notes">{{note}}</div>
+        {{unless saved}}
+            <div id="articles">
+                {{title}}
+            </div>
+            <div id="notes">
+                {{note}}
+            </div>
+        {{/unless}}
     {{/each}}
 </div>

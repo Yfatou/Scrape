@@ -16,6 +16,20 @@ var ArticleSchema = new Schema({
     type: String,
     required: true
   },
+  //Summary of the article
+  summary: {
+    type: String,
+    required: true
+  },
+  // Image associated with the article
+  image: {
+    type: String,
+    required: true
+  },
+  // saved will be a boolean to determine if the article has been saved or not
+  saved: {
+    type: Boolean
+  },
   // `note` is an object that stores a Note id
   // The ref property links the ObjectId to the Note model
   // This allows us to populate the Article with an associated Note
