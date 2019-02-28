@@ -12,6 +12,21 @@ var db = require("../models");
 var app = express.Router();
 
 // Routes
+
+// A get Route to the articles saved in the database
+// All saved articles will be loaded 
+app.ger("/", function(req, res) {
+  db.Article.find({saved: false})
+  .then(function(dbArticle) {
+    var hbsObject = {
+      articles: dbArticle
+    };
+    res.render("index", hbsObject);
+  }).catch(function(err) {
+    res.json(err);
+  });
+});
+
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with axios
@@ -26,12 +41,21 @@ app.get("/scrape", function(req, res) {
   
         // Add the text and href of every link, and save them as properties of the result object
         result.title = $(this)
-          .children("a")
+          .children("h2")
           .text();
         result.link = $(this)
           .children("a")
           .attr("href");
-  
+        // UNCOMMENT WHEN CHANGED TO NYTIMES
+        // result.summary = $(this)
+        //   .children("p.summary")
+        //   .thext();
+        // result.image = $(this)
+        //   .children("a")
+        //   .attr("img")
+        //   .attr("src");
+        result.saved = false;
+
         // Create a new Article using the `result` object built from scraping
         db.Article.create(result)
           .then(function(dbArticle) {
