@@ -28,10 +28,11 @@ app.get("/", function(req, res) {
 });
 
 
+
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with axios
-    axios.get("http://www.echojs.com/").then(function(response) {
+    axios.get("https://www.nytimes.com/section/food").then(function(response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
   
@@ -42,17 +43,17 @@ app.get("/scrape", function(req, res) {
   
         // Add the text and href of every link, and save them as properties of the result object
         result.title = $(this)
-          .children("h2")
+          .find("h2")
           .text();
         result.link = $(this)
-          .children("a")
+          .find("a")
           .attr("href");
         result.summary = $(this)
-          .children("p.summary")
+          .find("p.summary")
           .text();
         result.image = $(this)
-          .children("a")
-          .children("img")
+          .find("a")
+          .find("img")
           .attr("src");
         result.saved = false;
 
@@ -74,17 +75,29 @@ app.get("/scrape", function(req, res) {
   });
 
 
-  //delete note
-app.delete("/articles/:id", function (req, res) {
+// Route to save an article
+app.post("/save/:id", function(req, res) {
+  db.Article
+    .update({ _id: req.params.id }, { $set: {saved: true}})
+    .then(function(dbArticle) {
+      res.json("dbArticle");
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+});
 
-  console.log("id:"+req.params.id);
-  db.Article.findByIdAndRemove(req.params.id, function (err) {
-    if (err)
-      res.send(err);
-    else
-      res.json({ message: 'Note Deleted!' });
-  });
- });
+  //delete note
+// app.delete("/articles/:id", function (req, res) {
+
+//   console.log("id:"+req.params.id);
+//   db.Article.findByIdAndRemove(req.params.id, function (err) {
+//     if (err)
+//       res.send(err);
+//     else
+//       res.json({ message: 'Note Deleted!' });
+//   });
+//  });
 
   
   // Route for getting all Articles from the db
@@ -105,22 +118,22 @@ app.delete("/articles/:id", function (req, res) {
   //     });
   // });
   
-  // Route for getting all Articles from the db
-  app.get("/articles", function(req, res) {
-    // Grab every document in the Articles collection
-    db.Article.find({})
-      .then(function(dbArticle) {
-        // If we were able to successfully find Articles, send them back to the client
-        res.json(dbArticle);
-      })
-      .catch(function(err) {
-        // If an error occurred, send it to the client
-        res.json(err);
-      });
-  });
+  // // Route for getting all Articles from the db
+  // app.get("/articles", function(req, res) {
+  //   // Grab every document in the Articles collection
+  //   db.Article.find({})
+  //     .then(function(dbArticle) {
+  //       // If we were able to successfully find Articles, send them back to the client
+  //       res.json(dbArticle);
+  //     })
+  //     .catch(function(err) {
+  //       // If an error occurred, send it to the client
+  //       res.json(err);
+  //     });
+  // });
 
-  // Route for grabbing a specific Article by id, populate it with it's note
-  app.get("/articles/:id", function(req, res) {
+  // // Route for grabbing a specific Article by id, populate it with it's note
+  app.get("/getNotes/:id", function(req, res) {
     // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
     db.Article.findOne({ _id: req.params.id })
       // ..and populate all of the notes associated with it
@@ -135,8 +148,8 @@ app.delete("/articles/:id", function (req, res) {
       });
   });
   
-  // Route for saving/updating an Article's associated Note
-  app.post("/articles/:id", function(req, res) {
+  // Route to create or update a Note
+  app.post("/createNote/:id", function(req, res) {
     // Create a new note and pass the req.body to the entry
     db.Note.create(req.body)
       .then(function(dbNote) {
@@ -154,5 +167,33 @@ app.delete("/articles/:id", function (req, res) {
         res.json(err);
       });
   });
-  
+
+  // Route to save an article
+  app.post("/save/:id", function(req, res) {
+    db.Article
+      .update({ _id: req.params.id }, { $set: {saved: true}})
+      .then(function(dbArticle) {
+        res.json("dbArticle");
+      })
+      .catch(function(err) {
+        res.json(err);
+      });
+  });
+
+
+  // Route to load the saved articles
+  app.get("/saved", function(req, res) {
+    db.Article
+    .find({ saved: true })
+    .then(function(dbArticles) {
+      var hbsObject = {
+        articles: dbArticles
+      };
+      res.render("saved", hbsObject);
+    })
+    .catch(function(err){
+      res.json(err);
+    });
+  });
+
   module.exports = app;

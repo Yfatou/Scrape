@@ -17,20 +17,22 @@
     </div>
 </nav>
 
-<div id="wrapper">
-    <div class="articles">
+{{!-- <div id="wrapper"> --}}
+    <div id="articles">
         <div class="load"></div>
         {{#each articles}}
             {{#unless saved}}
             <div class="article">
-                <h2>{{title}}</h2>
+                <img src="{{image}}" style="height: 100px;">
+                <a href="{{link}}"><h2>{{title}}</h2></a>
+                <p>{{summary}}</p>
                 <button class="btn btn-primary save" data-id="{{_id}}">Save</button>
-                <div id="notes">
+                {{!-- <div id="notes">
                     {{note}}
-                </div>
+                </div> --}}
             </div>
             {{/unless}}
         {{/each}}
     </div>
-    <a href="/scrape">start scraping...</a>
-</div>
+    {{!-- <a href="/scrape">start scraping...</a> --}}
+{{!-- </div> --}}

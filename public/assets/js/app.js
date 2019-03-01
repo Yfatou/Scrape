@@ -62,7 +62,7 @@ $(document).on("click", ".addNote", function(a) {
   // Now make an ajax call for the Article
   $.ajax({
     method: "GET",
-    url: "/addNotes/" + thisId
+    url: "/getNotes/" + thisId
   })
     // With that done, add the note information to the page
     .then(function(data) {

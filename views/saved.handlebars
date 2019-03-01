@@ -1,0 +1,43 @@
+<nav class="navbar ">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Saved Articles</a>
+    </div>
+    <ul class="nav navbar-nav mr-auto top-buttons">
+        <li class="nav-item active">
+            <a class="nav-link home" href="#">Home </a>
+        </li>
+        <li><button class="btn btn-warning clear">Clear Articles</button></li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="articles">
+    {{#each articles}}
+        {{#if saved}}
+            <div class="article">
+                <img src="{{image}}" style="height:100px;">
+                <a href="{{link}}"><h2>{{title}}</h2></a>
+                <p>{{summary}}</p>
+                <button class="btn btn-primary unsave" data-id="{{_id}}">DELETE FROM SAVED</button>
+                <button class="btn btn-primary addNote" data-id="{{_id}}">ARTICLE NOTES</button>
+                <br>
+            </div>
+        {{/if}}
+    {{/each}}
+</div>
+
+
+ {{!-- modal for displaying and creating notes --}}
+<div id="noteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title text-center">Add a note</h4>
+        </div>
+        <div id="notes" class="modal-body"></div>
+      </div>
+    </div>
+</div>
