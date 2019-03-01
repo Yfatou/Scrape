@@ -15,7 +15,7 @@ var app = express.Router();
 
 // A get Route to the articles saved in the database
 // All saved articles will be loaded 
-app.ger("/", function(req, res) {
+app.get("/", function(req, res) {
   db.Article.find({saved: false})
   .then(function(dbArticle) {
     var hbsObject = {
