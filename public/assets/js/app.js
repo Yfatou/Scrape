@@ -1,3 +1,47 @@
+// Listener event for the scrape button
+$(document).on("click", ".scrape", function() {
+  $.get( "/scrape", function (req, res) {
+    console.log(res);
+  }).then(function(data) {
+    window.location.href = "/";
+  });
+});
+
+
+// Listener event for the home link
+$(document).on("click", ".home", function() {
+  $.get( "/", function (req, res) {
+    console.log(res);
+  }).then(function(data) {
+    window.location.href = "/";
+  });
+});
+
+
+// Listener event for the saved articles link
+$(document).on("click", ".saved", function() {
+  $.get( "/saved", function (req, res) {
+    console.log(res);
+  }).then(function(data) {
+    window.location.href = "/saved";
+  });
+});
+
+
+// Listener event for the save article button
+$(document).on("click", ".save", function(a) {
+  //The article is removed from the page
+  $(this).parent().remove();
+  var articleId = $(this).attr("data-id");// The id is saved in a variable
+  $.ajax({ 
+    url: '/save/' + articleId,
+    type: "POST"
+  }).done(function(data) {
+    $(".article").filter("[data-id='" + articleId + "']").remove();
+  });
+});
+
+
 // Grab the articles as a json
 $.getJSON("/articles", function(data) {
   // For each one
@@ -8,8 +52,8 @@ $.getJSON("/articles", function(data) {
 });
 
 
-// Whenever someone clicks a p tag
-$(document).on("click", "p", function() {
+// Event listener to add a note
+$(document).on("click", ".addNote", function(a) {
   // Empty the notes from the note section
   $("#notes").empty();
   // Save the id from the p tag
@@ -18,7 +62,7 @@ $(document).on("click", "p", function() {
   // Now make an ajax call for the Article
   $.ajax({
     method: "GET",
-    url: "/articles/" + thisId
+    url: "/addNotes/" + thisId
   })
     // With that done, add the note information to the page
     .then(function(data) {
@@ -40,9 +84,11 @@ $(document).on("click", "p", function() {
         $("#bodyinput").val(data.note.body);
       }
     });
+    $('noteModal').modal();
 });
 
-// When you click the savenote button
+
+// Event listener for the savenote button
 $(document).on("click", "#savenote", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
@@ -50,7 +96,7 @@ $(document).on("click", "#savenote", function() {
   // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
     method: "POST",
-    url: "/articles/" + thisId,
+    url: "/createNote/" + thisId,
     data: {
       // Value taken from title input
       title: $("#titleinput").val(),
@@ -69,7 +115,22 @@ $(document).on("click", "#savenote", function() {
   // Also, remove the values entered in the input and textarea for note entry
   $("#titleinput").val("");
   $("#bodyinput").val("");
+  $('#noteModal').modal('hide');
 });
+
+
+// Event listener to delete a saved article
+$(document).on("click", ".deleteSave", function(){
+  $(this).parent().remove();
+  var articleId = $(this).attr("data-id");
+
+  $.ajax({
+      url: '/deletesave/' + articleId,
+      type: "POST"
+  }).done(function(data) {
+      $(".article").filter("[data-id='" + articleId + "']").remove();
+  });
+})
 
 // When you click the delete button
 $(document).on("click", ".deletebtn", function () {

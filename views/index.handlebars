@@ -4,8 +4,13 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Mongo Scraper</a>
         </div>
-        <ul class="nav navbar-nav navbar-right top-buttons">
-            <li><button class="btn btn-light saved">Saved Articles</button></li>
+        <ul class="nav navbar-nav mr-auto top-buttons">
+            <li class="nav-item active">
+                <a class="nav-link home" href="#">Home </a>
+            </li>
+            <li class="nav-item saved">
+                <a class="nav-link" href="#">Saved Articles</a>
+            </li>
             <li><button class="btn btn-warning scrape">Scrape New Articles</button></li>
             <li><button class="btn btn-warning clear">Clear Articles</button></li>
         </ul>
@@ -15,9 +20,9 @@
 <div id="wrapper">
     <div class="articles">
         <div class="load"></div>
-        {{#each scrapes}}
+        {{#each articles}}
             {{#unless saved}}
-            <div id="article">
+            <div class="article">
                 <h2>{{title}}</h2>
                 <button class="btn btn-primary save" data-id="{{_id}}">Save</button>
                 <div id="notes">
@@ -28,7 +33,4 @@
         {{/each}}
     </div>
     <a href="/scrape">start scraping...</a>
-    <h1>Note Scraper</h1>
-    <h2><i>If you can do this...the homework should be no problem.</i></h2>
-    
 </div>
