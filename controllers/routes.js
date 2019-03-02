@@ -13,23 +13,23 @@ var app = express.Router();
 
 // Routes
 
-// A GET route for scraping the echoJS website
+// A GET route for scraping the food setion of the new york times website
 app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with axios
     axios.get("https://www.nytimes.com/section/food").then(function(response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
   
-      // Now, we grab every h2 within an article tag, and do the following:
+      // Now, we grab every article tag, and do the following:
       $("article").each(function(i, element) {
         // Save an empty result object
         var result = {};
   
         // Add the text and href of every link, and save them as properties of the result object
-        result.title = $(this)
+        result.title = $(this) //Add the text of the title
           .find("a")
           .text();
-        result.link = $(this)
+        result.link = $(this) // Add the 
           .find("a")
           .attr("href");
         result.summary = $(this)
@@ -62,8 +62,8 @@ app.get("/scrape", function(req, res) {
   });
 
 
-// A get Route to the articles saved in the database
-// All saved articles will be loaded 
+// A get Route to the articles in the database
+// All articles in the database that aren't saved will be loaded 
 app.get("/", function(req, res) {
   db.Article.find({saved: false})
   .then(function(dbArticle) {
@@ -80,7 +80,7 @@ app.get("/", function(req, res) {
 // Route to save an article
 app.post("/save/:id", function(req, res) {
   db.Article
-    .update({ _id: req.params.id }, { $set: {saved: true}})
+    .update({ _id: req.params.id }, { $set: {saved: true}}) // Update the value of the variable saved
     .then(function(dbArticle) {
       res.json("dbArticle");
     })
@@ -88,19 +88,6 @@ app.post("/save/:id", function(req, res) {
       res.json(err);
     });
 });
-
-  //delete note
-// app.delete("/articles/:id", function (req, res) {
-
-//   console.log("id:"+req.params.id);
-//   db.Article.findByIdAndRemove(req.params.id, function (err) {
-//     if (err)
-//       res.send(err);
-//     else
-//       res.json({ message: 'Note Deleted!' });
-//   });
-//  });
-
 
   
   // // Route for getting all Articles from the db
@@ -150,18 +137,6 @@ app.post("/save/:id", function(req, res) {
       })
       .catch(function(err) {
         // If an error occurred, send it to the client
-        res.json(err);
-      });
-  });
-
-  // Route to save an article
-  app.post("/save/:id", function(req, res) {
-    db.Article
-      .update({ _id: req.params.id }, { $set: {saved: true}})
-      .then(function(dbArticle) {
-        res.json("dbArticle");
-      })
-      .catch(function(err) {
         res.json(err);
       });
   });

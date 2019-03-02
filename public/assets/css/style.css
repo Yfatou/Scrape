@@ -1,6 +1,8 @@
 body {
-  background-image: url("../images/vintage-concrete.png");
+  background-image: url("../images/new-york-times.jpg");
+  background-size: cover;
 }
+
 
 .header {
   background-image: url("../images/Nyt.jpg")
@@ -8,4 +10,17 @@ body {
 
 nav li {
   display: inline-block;
+}
+
+/* .card {
+  background-image: url("../images/vintage-concrete.png");
+} */
+
+h1 {
+  font-family: 'Oldenburg', cursive;
+  font-size: 80px;
+}
+
+h2, h3 {
+  font-family: 'Oldenburg', cursive;
 }

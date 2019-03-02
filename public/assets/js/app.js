@@ -1,6 +1,6 @@
 // Listener event for the scrape button
 $(document).on("click", ".scrape", function() {
-  $.get( "/scrape", function (req, res) {
+  $.get( "/scrape", function (req, res) { // Load the scrape page
     console.log(res);
   }).then(function(data) {
     window.location.href = "/";
@@ -10,7 +10,7 @@ $(document).on("click", ".scrape", function() {
 
 // Listener event for the home link
 $(document).on("click", ".home", function() {
-  $.get( "/", function (req, res) {
+  $.get( "/", function (req, res) { // Load the home page
     console.log(res);
   }).then(function(data) {
     window.location.href = "/";
@@ -20,7 +20,7 @@ $(document).on("click", ".home", function() {
 
 // Listener event for the saved articles link
 $(document).on("click", ".saved", function() {
-  $.get( "/saved", function (req, res) {
+  $.get( "/saved", function (req, res) { // Load the saved articles page
     console.log(res);
   }).then(function(data) {
     window.location.href = "/saved";
@@ -33,7 +33,7 @@ $(document).on("click", ".save", function(a) {
   //The article is removed from the page
   $(this).parent().remove();
   var articleId = $(this).attr("data-id");// The id is saved in a variable
-  $.ajax({ 
+  $.ajax({ // Post request to change the value of the save variable
     url: '/save/' + articleId,
     type: "POST"
   }).done(function(data) {
@@ -135,7 +135,7 @@ $(document).on("click", "#saveNote", function() {
 $(document).on("click", ".deleteFromSaved", function(){
   $(this).parent().remove();
   var articleId = $(this).attr("data-id");
-  $.ajax({
+  $.ajax({ // Post request to change the value of the save variable
       url: '/deletesaved/' + articleId,
       type: "POST"
   }).done(function(data) {

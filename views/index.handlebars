@@ -10,7 +10,6 @@
 </nav>
 <br>
 
-
 <div class="container-fluid">
     <div class="jumbotron text-center header">
         <div class="overlay">
@@ -21,25 +20,29 @@
         </div>
     </div>
     <div class = row>
-        <div class = "col-md-12">
+        <div class = "col-12">
             <div id="articles">
-                {{#if article}}
-                    {{#each articles}}
+                {{!-- {{#if article}} --}} 
+                    {{#each articles}} 
+                        {{!-- For each scraped article --}}
                         {{#unless saved}}
+                        {{!-- It it is not saved ==> save = true in then db --}}
                             <div class="article">
-                                <a href="{{link}}" target="_blank">
-                                    <h3>{{title}}</h3>
-                                </a>
-                                <img src="{{image}}" style="height: 100px;">
+                                {{!-- The scraped informations are displayed --}}
+                                <img src="{{image}}" style="height: 150px;">
+                                <h3>{{title}}</h3>
                                 <p>{{summary}}</p>
+                                <a href="{{link}}" target="_blank">{{link}}</a>
+                                <br>
+                                {{!-- Button to save the article in the saved page --}}
                                 <button class="btn btn-primary save" data-id="{{_id}}">Save</button>
                             </div>
                             <br>
                         {{/unless}}
                     {{/each}}
-                {{else}}
-                    <h4>Uh Oh. Looks like we don't have any new articles.</h4>
-                {{/if}}
+                {{!-- {{else}} --}}
+                    {{!-- <h4>Uh Oh. Looks like we don't have any new articles.</h4> --}}
+                {{!-- {{/if}} --}}
             </div>
         </div>
     </div>

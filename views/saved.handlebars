@@ -1,3 +1,4 @@
+{{!-- Navigation bar --}}
 <nav class="navbarnavbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
             <a class="navbar-brand" href="#">Mongo Scraper</a>
@@ -20,13 +21,19 @@
         <div class = "col-12">
             <div id="articles">
                 {{#each articles}}
+                {{!-- For each saved articles --}}
                     {{#if saved}}
                         <div class="article">
-                            <img src="{{image}}" style="height:100px;">
-                            <a href="{{link}}"><h2>{{title}}</h2></a>
+                            {{!-- The scraped informations are displayed --}}
+                            <img src="{{image}}" style="height:150px;">
+                            <h2>{{title}}</h2>
                             <p>{{summary}}</p>
+                            <a href="{{link}}">{{link}}</a>
+                            <br>
+                            {{!-- Button to "unsave" an article ==> save = false --}}
                             <button class="btn btn-primary deleteFromSaved" data-id="{{_id}}">DELETE FROM SAVED</button>
                             {{!-- <button class="btn btn-primary addNote" data-id="{{_id}}">ARTICLE NOTES</button> --}}
+                            {{!-- Button to add/update/delete a note for an article --}}
                             <button type="button" class="btn btn-primary addNote" data-toggle="modal" data-id="{{_id}}">ARTICLE NOTES</button>
                         </div>
                         <br>
