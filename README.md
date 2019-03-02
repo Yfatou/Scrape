@@ -10,7 +10,7 @@ The app will work in two ways:
  - Scrapping the website and save desired articles.
  - Add personal notes to the saved articles.
 
-Click here xxx to access to the deployed version of the app.
+Click here https://yfatou-scrape.herokuapp.com/ to access to the deployed version of the app.
 
 
 ## How to scrap the food section of the New York Times website!
