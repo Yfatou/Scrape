@@ -13,22 +13,6 @@ var app = express.Router();
 
 // Routes
 
-// A get Route to the articles saved in the database
-// All saved articles will be loaded 
-app.get("/", function(req, res) {
-  db.Article.find({saved: false})
-  .then(function(dbArticle) {
-    var hbsObject = {
-      articles: dbArticle
-    };
-    res.render("index", hbsObject);
-  }).catch(function(err) {
-    res.json(err);
-  });
-});
-
-
-
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with axios
@@ -37,20 +21,25 @@ app.get("/scrape", function(req, res) {
       var $ = cheerio.load(response.data);
   
       // Now, we grab every h2 within an article tag, and do the following:
-      $("article h2").each(function(i, element) {
+      $("article").each(function(i, element) {
         // Save an empty result object
         var result = {};
   
         // Add the text and href of every link, and save them as properties of the result object
         result.title = $(this)
-          .find("h2")
+          .find("a")
+          //.children("a")
           .text();
         result.link = $(this)
           .find("a")
           .attr("href");
         result.summary = $(this)
-          .find("p.summary")
-          .text();
+          .find(".summary")
+          //.find("p.summary")
+          .text()
+          || $(this)
+                .find("ul")
+                .text();
         result.image = $(this)
           .find("a")
           .find("img")
@@ -73,6 +62,21 @@ app.get("/scrape", function(req, res) {
       res.send("Scrape Complete");
     });
   });
+
+
+// A get Route to the articles saved in the database
+// All saved articles will be loaded 
+app.get("/", function(req, res) {
+  db.Article.find({saved: false})
+  .then(function(dbArticle) {
+    var hbsObject = {
+      articles: dbArticle
+    };
+    res.render("index", hbsObject);
+  }).catch(function(err) {
+    res.json(err);
+  });
+});
 
 
 // Route to save an article
@@ -119,18 +123,18 @@ app.post("/save/:id", function(req, res) {
   // });
   
   // // Route for getting all Articles from the db
-  // app.get("/articles", function(req, res) {
-  //   // Grab every document in the Articles collection
-  //   db.Article.find({})
-  //     .then(function(dbArticle) {
-  //       // If we were able to successfully find Articles, send them back to the client
-  //       res.json(dbArticle);
-  //     })
-  //     .catch(function(err) {
-  //       // If an error occurred, send it to the client
-  //       res.json(err);
-  //     });
-  // });
+  app.get("/articles", function(req, res) {
+    // Grab every document in the Articles collection
+    db.Article.find({})
+      .then(function(dbArticle) {
+        // If we were able to successfully find Articles, send them back to the client
+        res.json(dbArticle);
+      })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
 
   // // Route for grabbing a specific Article by id, populate it with it's note
   app.get("/getNotes/:id", function(req, res) {
