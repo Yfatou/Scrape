@@ -28,14 +28,12 @@ app.get("/scrape", function(req, res) {
         // Add the text and href of every link, and save them as properties of the result object
         result.title = $(this)
           .find("a")
-          //.children("a")
           .text();
         result.link = $(this)
           .find("a")
           .attr("href");
         result.summary = $(this)
           .find(".summary")
-          //.find("p.summary")
           .text()
           || $(this)
                 .find("ul")

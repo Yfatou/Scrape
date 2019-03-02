@@ -1,38 +1,43 @@
 {{!-- Navigation bar --}}
-<nav class="navbar">
+<nav class="navbarnavbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <div class="navbar-header">
             <a class="navbar-brand" href="#">Mongo Scraper</a>
-        </div>
-        <ul class="nav navbar-nav mr-auto top-buttons">
-            <li class="nav-item active">
-                <a class="nav-link home" href="#">Home </a>
-            </li>
-            <li class="nav-item saved">
-                <a class="nav-link" href="#">Saved Articles</a>
-            </li>
-            <li><button class="btn btn-warning scrape">Scrape New Articles</button></li>
-            <li><button class="btn btn-warning clear">Clear Articles</button></li>
-        </ul>
+            <li><a class="nav-item nav-link home" href="#">Home</a></li>
+            <li><a class="nav-item nav-link saved" href="#">Saved Articles</a></li>
+            <li><button class="btn btn-danger scrape">Scrape New Articles</button></li>
+            <li><button class="btn btn-danger clear">Clear Articles</button></li>
     </div>
 </nav>
+<br>
 
-{{!-- <div id="wrapper"> --}}
-    <div id="articles">
-        <div class="load"></div>
-        {{#each articles}}
-            {{#unless saved}}
-            <div class="article">
-                <img src="{{image}}" style="height: 100px;">
-                <a href="{{link}}"><h2>{{title}}</h2></a>
-                <p>{{summary}}</p>
-                <button class="btn btn-primary save" data-id="{{_id}}">Save</button>
-                {{!-- <div id="notes">
-                    {{note}}
-                </div> --}}
+
+<div class="container-fluid">
+    <div class="jumbotron text-center header">
+        <div class="overlay">
+            <div class="caption">
+                <h1 class="display-1 text-muted">Mongo Scraper</h1>
+                <h2 class="text-dark">The New York Times Food Edition</h2>
             </div>
-            {{/unless}}
-        {{/each}}
+        </div>
     </div>
-    {{!-- <a href="/scrape">start scraping...</a> --}}
-{{!-- </div> --}}
+    <div class=row>
+        <div class = "col-12">
+            <div id="articles">
+                {{#each articles}}
+                    {{#unless saved}}
+                    <div class="article">
+                        <img src="{{image}}" style="height: 100px;">
+                        <a href="{{link}}" target="_blank">
+                            <h2>{{title}}</h2>
+                        </a>
+                        <p>{{summary}}</p>
+                        <button class="btn btn-primary save" data-id="{{_id}}">Save</button>
+                    </div>
+                    <br>
+                    {{/unless}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+  
