@@ -111,8 +111,10 @@ app.post("/save/:id", function(req, res) {
 
 
   // Route to create or update a Note
-  app.post("/createNote/:id", function(req, res) {
+  app.post("/articles/:id", function(req, res) {
     // Create a new note and pass the req.body to the entry
+    console.log("in create note function");
+    console.log(req.body);
     db.Note.create(req.body)
       .then(function(dbNote) {
         // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
