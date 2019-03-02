@@ -10,8 +10,8 @@
 <div class="container-fluid">
     <div class="jumbotron text-center header">
         <div class="overlay">
-            <div class="caption">
-                <h1 class="display-1 text-muted">Mongo Scraper</h1>
+            <div class="titleOverlay">
+                <h1 class="title text-muted">Mongo Scraper</h1>
                 <h2 class="text-dark">The New York Times Food Edition</h2>
             </div>
         </div>
@@ -39,12 +39,25 @@
  {{!-- modal for displaying and creating notes --}}
 <div id="noteModal" class="modal fade" role="dialog">
     <div class="modal-dialog modal-md">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title text-center">Add a note</h4>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Notes for Article <span id="article-id"></span></h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">Add a note</h4>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <ul class="list-group list-group-flush listArticles"></ul>
+                </div>
+                <br/>
+                <div class="form-group">
+                    <label for="note-input" class="sr-only">Enter Note Here</label>
+                    <textarea class="form-control" id="note-input" rows="3" placeholder="New Note"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="save-note">Save Note</button>
+            </div>
         </div>
-        <div id="notes" class="modal-body"></div>
-      </div>
     </div>
 </div>
