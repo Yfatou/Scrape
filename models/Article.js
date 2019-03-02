@@ -9,22 +9,22 @@ var ArticleSchema = new Schema({
   // `title` is required and of type String
   title: {
     type: String,
-    //required: true
+    required: true
   },
   // `link` is required and of type String
   link: {
     type: String,
-    //required: true
+    required: true
   },
   //Summary of the article 
   summary: {
     type: String,
-    //required: true
+    required: true
   },
   // Image associated with the article
   image: {
     type: String,
-    //required: true
+    required: true
   },
   // saved will be a boolean to determine if the article has been saved or not
   saved: {
