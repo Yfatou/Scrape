@@ -25,10 +25,10 @@
                             <img src="{{image}}" style="height:100px;">
                             <a href="{{link}}"><h2>{{title}}</h2></a>
                             <p>{{summary}}</p>
-                            <button class="btn btn-primary unsave" data-id="{{_id}}">DELETE FROM SAVED</button>
+                            <button class="btn btn-primary deleteFromSaved" data-id="{{_id}}">DELETE FROM SAVED</button>
                             <button class="btn btn-primary addNote" data-id="{{_id}}">ARTICLE NOTES</button>
-                            <br>
                         </div>
+                        <br>
                     {{/if}}
                 {{/each}}
             </div>
@@ -37,13 +37,15 @@
 </div>
 
  {{!-- modal for displaying and creating notes --}}
-<div id="noteModal" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-md">
+<div id="noteModal" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="successMessage" aria-hidden="true"> 
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Notes for Article <span id="article-id"></span></h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title text-center">Add a note</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{!-- <h4 class="modal-title text-center">Add a note</h4> --}}
             </div>
             <div class="modal-body">
                 <div class="card">
@@ -56,7 +58,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="save-note">Save Note</button>
+                <button type="button" class="btn btn-secondary" id="saveNote">Save Note</button>
             </div>
         </div>
     </div>

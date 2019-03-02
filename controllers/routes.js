@@ -101,24 +101,7 @@ app.post("/save/:id", function(req, res) {
 //   });
 //  });
 
-  
-  // Route for getting all Articles from the db
-  // app.get("/", function(req, res) {
-  //   // Grab every document in the Articles collection
-  //   db.Article.find({})
-  //     .then(function(dbArticle) {
-  //       // If we were able to successfully find Articles, send them back to the client
-  //       var hbsObject = {
-  //         scrapes: data
-  //       };
-  //       console.log(hbsObject);
-  //       res.render("index", hbsObject);
-  //     })
-  //     .catch(function(err) {
-  //       // If an error occurred, send it to the client
-  //       res.json(err);
-  //     });
-  // });
+
   
   // // Route for getting all Articles from the db
   // app.get("/articles", function(req, res) {
@@ -197,5 +180,19 @@ app.post("/save/:id", function(req, res) {
       res.json(err);
     });
   });
+
+  // Route to unsave an article. 
+  // This route will delete the article from the saved articles and update its saved value in the database
+app.post("/deletesaved/:id", function(req, res) {
+  db.Article
+    .update({ _id: req.params.id }, { $set: {saved: false}})
+    .then(function(dbArticle) {
+      res.json("dbArticle");
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+});
+
 
   module.exports = app;

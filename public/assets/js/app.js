@@ -43,22 +43,23 @@ $(document).on("click", ".save", function(a) {
 
 
 // Grab the articles as a json
-$.getJSON("/articles", function(data) {
-  // For each one
-  for (var i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
-  }
-});
+// $.getJSON("/articles", function(data) {
+//   // For each one
+//   for (var i = 0; i < data.length; i++) {
+//     // Display the apropos information on the page
+//     $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+//   }
+// });
 
 
 // Event listener to add a note
 $(document).on("click", ".addNote", function(a) {
   // Empty the notes from the note section
-  $("#notes").empty();
+  //$("#notes").empty();
   // Save the id from the p tag
   var thisId = $(this).attr("data-id");
-
+  $("#article-id").text(thisId);
+  $("#saveNote").attr("data", thisId);
   // Now make an ajax call for the Article
   $.ajax({
     method: "GET",
@@ -68,28 +69,38 @@ $(document).on("click", ".addNote", function(a) {
     .then(function(data) {
       console.log(data);
       // The title of the article
-      $("#notes").append("<h2>" + data.title + "</h2>");
-      // An input to enter a new title
-      $("#notes").append("<input id='titleinput' name='title' >");
-      // A textarea to add a new note body
-      $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
-      // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      // $("#notes").append("<h2>" + data.title + "</h2>");
+      // // An input to enter a new title
+      // $("#notes").append("<input id='titleinput' name='title' >");
+      // // A textarea to add a new note body
+      // $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
+      // // A button to submit a new note, with the id of the article saved to it
+      // $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
-      // If there's a note in the article
-      if (data.note) {
-        // Place the title of the note in the title input
-        $("#titleinput").val(data.note.title);
-        // Place the body of the note in the body textarea
-        $("#bodyinput").val(data.note.body);
-      }
-    });
-    $('noteModal').modal();
+      // // If there's a note in the article
+      // if (data.note) {
+      //   // Place the title of the note in the title input
+      //   $("#titleinput").val(data.note.title);
+      //   // Place the body of the note in the body textarea
+      //   $("#bodyinput").val(data.note.body);
+      //}
+      $('.listArticles').empty();
+            if (data[0].note.length > 0){
+                data[0].note.forEach(v => {
+                    $('.listArticles').append($(`<li class='list-group-item'>${v.text}<button type='button' class='btn btn-danger btn-sm float-right btn-deletenote' data='${v._id}'>X</button></li>`));
+                })
+            }
+            else {
+                $('.listArticles').append($(`<li class='list-group-item'>No notes for this article yet</li>`));
+                console.log("Second ran!")
+            }
+    })
+    $('#noteModal').modal('toggle');
 });
 
 
-// Event listener for the savenote button
-$(document).on("click", "#savenote", function() {
+// Event listener for the savenote button - to save a note
+$(document).on("click", "#saveNote", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
 
@@ -119,18 +130,18 @@ $(document).on("click", "#savenote", function() {
 });
 
 
-// Event listener to delete a saved article
-$(document).on("click", ".deleteSave", function(){
+// Event listener to unsave a saved article
+$(document).on("click", ".deleteFromSaved", function(){
   $(this).parent().remove();
   var articleId = $(this).attr("data-id");
-
   $.ajax({
-      url: '/deletesave/' + articleId,
+      url: '/deletesaved/' + articleId,
       type: "POST"
   }).done(function(data) {
       $(".article").filter("[data-id='" + articleId + "']").remove();
   });
 })
+
 
 // When you click the delete button
 $(document).on("click", ".deletebtn", function () {
