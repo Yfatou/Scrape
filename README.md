@@ -48,13 +48,6 @@ The scraped datas are stores in a Mongo database.
 
 ## How to setup the scrape app locally
 To use this application from a local environment, the following steps will be necessary:
-
-
-Open the repo and execute the following in the bash terminal. Doing so should install the application's dependencies:
-npm i
-Run the application from the command line:
-node server.js
-
  
  1. Make sure that Node.js, npm and MongoDB are installed on your machine.
 
