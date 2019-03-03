@@ -32,10 +32,8 @@
                             <br>
                             {{!-- Button to "unsave" an article ==> save = false --}}
                             <button class="btn btn-primary deleteFromSaved" data-id="{{_id}}">DELETE FROM SAVED</button>
-                            {{!-- <button class="btn btn-primary addNote" data-id="{{_id}}">ARTICLE NOTES</button> --}}
+                           
                             {{!-- Button to add/update/delete a note for an article --}}
-                            {{!-- <button type="button" class="btn btn-primary addNote" data-toggle="modal" data-id="{{_id}}">ARTICLE NOTES</button> --}}
-                            {{!-- <button type="button" class="btn btn-primary addNote" data-toggle="modal" data-target="#noteModal{{_id}}" data-id="{{_id}}"> --}}
                             <button type="button" class="btn btn-primary addNote" data-toggle="modal" data-target="#noteModal" data-id="{{_id}}">
                                 ARTICLE NOTES
                             </button>
@@ -54,24 +52,30 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Notes for Article</h5>
+                <h5 class="modal-title">Notes for Article <span id="article-id"></span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="notes">
-                <div class="card">
+                {{!-- <div class="card">
                     <ul class="list-group list-group-flush listArticles"></ul>
-                </div>
-                <br/>
+                </div> --}}
+                {{!-- <br/> --}}
+                <h3 id="notestitle"></h3>
+                <p id="notesbody"></p>
                 <div class="form-group">
-                    <label for="note-input" class="sr-only">Enter Note Here</label>
-                    <textarea class="form-control note-input" rows="3" placeholder="New Note"></textarea>
+                    <label for="title-input">Title: </label>
+                    <input class="form-control" id="title-input" name="title"></input>
+                </div>
+                <div class="form-group">
+                    <label for="note-input">Note: </label>
+                    <input class="form-control" id="note-input" name="note"></input>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary saveNote">Save note</button>
+                <button type="button" class="btn btn-primary" id="saveNote">Save note</button>
             </div>
         </div>
     </div>

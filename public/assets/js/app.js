@@ -37,53 +37,9 @@ $(document).on("click", ".save", function(a) {
     url: '/save/' + articleId,
     type: "POST"
   }).done(function(data) {
-    $(".article").filter("[data-id='" + articleId + "']").remove();
+    $(".article").filter("[data-id='" + articleId + "']").remove();// Remove the article from the homepage
   });
 });
-
-
-// Grab the articles as a json
-// $.getJSON("/articles", function(data) {
-//   // For each one
-//   for (var i = 0; i < data.length; i++) {
-//     // Display the apropos information on the page
-//     $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
-//   }
-// });
-
-
-
-// // Event listener for the savenote button - to save a note
-$(document).on("click", ".saveNote", function() {
-  console.log("in savenote on click")
-  // Grab the id associated with the article from the submit button
-  var thisId = $(this).attr("data-id");
-  var noteText = $(".note-input").val().trim();
-  // Run a POST request to change the note, using what's entered in the inputs
-  $.ajax({
-    method: "POST",
-    url: "/articles/" + thisId,
-    data: {
-      // Value taken from title input
-      note: noteText
-      // Value taken from note textarea
-      //body: $("#bodyinput").val()
-    }
-  })
-    // With that done
-    .then(function(data) {
-      // Log the response
-      console.log("data in saveNote" + data);
-      // Empty the notes section
-      $("#notes").empty();
-    });
-
-  // Also, remove the values entered in the input and textarea for note entry
-  $(".note-input").val("");
-  $('#noteModal').modal('hide');
-  window.location = "/saved";
-});
-
 
 
 // Event listener to unsave a saved article
@@ -94,33 +50,9 @@ $(document).on("click", ".deleteFromSaved", function(){
       url: '/deletesaved/' + articleId,
       type: "POST"
   }).done(function(data) {
-      $(".article").filter("[data-id='" + articleId + "']").remove();
+      $(".article").filter("[data-id='" + articleId + "']").remove();// Remove the article from the saved page
   });
 })
-
-
-// $(document).on("click", "#saveNote", function () {
-//   var thisId = $(this).attr("data-id");
-//   var noteText = $("#note-input").val().trim();
-//   // if (!$("#noteText" + thisId).val()) {
-//   //     alert("please enter a note to save")
-//   // }else {
-//     $.ajax({
-//           method: "POST",
-//           url: "/articles/" + thisId,
-//           data: {
-//             text: noteText
-//           }
-//         }).done(function(data) {
-//             // Log the response
-//             console.log(data);
-//             // Empty the notes section
-//             $("#note-input" + thisId).val("");
-//             $("#noteModal").modal("hide");
-//             window.location = "/saved"
-//         });
-//   // }
-// });
 
 
 // When you click the delete button
@@ -139,5 +71,46 @@ $(document).on("click", ".deletebtn", function () {
     });
 
   // Also, remove the values entered in the input and textarea for note entry
-  $(".note-input").val("");
+  $("#note-input").val("");
+});
+
+
+// Event listenerer for opening the note modal
+$(document).on("click", ".addNote", function () {
+  // $("#notes").empty();
+  var thisId = $(this).attr("data-id");
+  $.ajax({
+    method: "GET",
+    url: "/articles/" + thisId
+  })
+  .then(function(data){
+      console.log(data)
+      if (data.note) {
+        $("#notestitle").val(data.note.title);
+        $("#notesbody").val(data.note.body);
+      }
+  });
+  //$('#noteModal').modal();
+});
+
+// Event listener for the save note button
+$(document).on("click", "#saveNote", function () {
+  var thisId = $(this).attr("data-id"); // Get the id of the article
+  // Post request wih the value entered by the user
+  $.ajax({
+    method: "POST",
+    url: "/articles/" + thisId,
+    data: {
+      title: $("#title-input").val(),
+      body: $("#note-input").val()
+    }
+  }).then(function(data) {
+      console.log(data);
+      //$("#notes").empty();
+    });
+
+  // Remove the values previously entered
+  $("#title-input").val("");
+  $("#note-input").val("");
+  $('#noteModal').modal('hide');
 });
