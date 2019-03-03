@@ -54,17 +54,18 @@ $(document).on("click", ".save", function(a) {
 
 
 // // Event listener for the savenote button - to save a note
-$(document).on("click", "#saveNote", function() {
+$(document).on("click", ".saveNote", function() {
+  console.log("in savenote on click")
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
-  var noteText = $("#note-input").val().trim();
+  var noteText = $(".note-input").val().trim();
   // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
     method: "POST",
     url: "/articles/" + thisId,
     data: {
       // Value taken from title input
-      body: noteText
+      note: noteText
       // Value taken from note textarea
       //body: $("#bodyinput").val()
     }
@@ -72,14 +73,13 @@ $(document).on("click", "#saveNote", function() {
     // With that done
     .then(function(data) {
       // Log the response
-      console.log(data);
+      console.log("data in saveNote" + data);
       // Empty the notes section
       $("#notes").empty();
     });
 
   // Also, remove the values entered in the input and textarea for note entry
-  $("#titleinput").val("");
-  $("#bodyinput").val("");
+  $(".note-input").val("");
   $('#noteModal').modal('hide');
   window.location = "/saved";
 });
@@ -99,28 +99,28 @@ $(document).on("click", ".deleteFromSaved", function(){
 })
 
 
-$(document).on("click", "#saveNote", function () {
-  var thisId = $(this).attr("data-id");
-  var noteText = $("#note-input").val().trim();
-  // if (!$("#noteText" + thisId).val()) {
-  //     alert("please enter a note to save")
-  // }else {
-    $.ajax({
-          method: "POST",
-          url: "/articles/" + thisId,
-          data: {
-            text: noteText
-          }
-        }).done(function(data) {
-            // Log the response
-            console.log(data);
-            // Empty the notes section
-            $("#note-input" + thisId).val("");
-            $("#noteModal").modal("hide");
-            window.location = "/saved"
-        });
-  // }
-});
+// $(document).on("click", "#saveNote", function () {
+//   var thisId = $(this).attr("data-id");
+//   var noteText = $("#note-input").val().trim();
+//   // if (!$("#noteText" + thisId).val()) {
+//   //     alert("please enter a note to save")
+//   // }else {
+//     $.ajax({
+//           method: "POST",
+//           url: "/articles/" + thisId,
+//           data: {
+//             text: noteText
+//           }
+//         }).done(function(data) {
+//             // Log the response
+//             console.log(data);
+//             // Empty the notes section
+//             $("#note-input" + thisId).val("");
+//             $("#noteModal").modal("hide");
+//             window.location = "/saved"
+//         });
+//   // }
+// });
 
 
 // When you click the delete button
@@ -131,17 +131,13 @@ $(document).on("click", ".deletebtn", function () {
   // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
     method: "DELETE",
-    url: "/articles/" + thisId
-
+    url: "/delete/" + thisId
   })
     // With that done
     .then(function (data) {
       location.reload();
-
-      
     });
 
   // Also, remove the values entered in the input and textarea for note entry
-  $("#titleinput").val("");
-  $("#bodyinput").val("");
+  $(".note-input").val("");
 });

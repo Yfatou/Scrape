@@ -2,14 +2,24 @@
 var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var path = require("path");
 
 var PORT = process.env.PORT || 3000;
+
+var routes = require("./controllers/routes");
+
 
 // Initialize Express
 var app = express();
 
-var routes = require("./controllers/routes");
 app.use(routes);
+
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
 
 // Configure middleware
 // Use morgan logger for logging requests
@@ -29,7 +39,8 @@ app.use(routes);
 
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/mongoheadline", { useNewUrlParser: true });
+//mongoose.connect("mongodb://localhost/mongoheadlines", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/mongoheadlines");
 
 // Start the server
 app.listen(PORT, function() {
