@@ -23,7 +23,7 @@ Once the user saved the articles, a click on the "saved articles" will display a
 The user can now choose to delete the article from the saved page with a click on the "delete from saved" button  (This action will delete this article from the saved articles and put it back in the homepage).
 The user can also choose to add a note to a saved article by clicking on the "article notes" button.
 
-![](scrape_demo2.gif)
+![](scrape-demo2.gif)
 
 
 ## How is this app built
