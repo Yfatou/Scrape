@@ -19,8 +19,8 @@ Once the scraping done, the articles are displayed on the homepage. The title, a
 
 ![](scrape_demo1.gif)
 
-Once the user saved the articles, a cick on the "saved articles" will display al the saved articles.
-The user can now choose to delete the article from the saved page with a click on the "delete from saved" button  (This action will delete this article fro the saved articles and put it back in the homepage).
+Once the user saved the articles, a click on the "saved articles" will display all the saved articles.
+The user can now choose to delete the article from the saved page with a click on the "delete from saved" button  (This action will delete this article from the saved articles and put it back in the homepage).
 The user can also choose to add a note to a saved article by clicking on the "article notes" button.
 
 ![](scrape_demo2.gif)
